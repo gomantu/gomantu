@@ -44,7 +44,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        jdk_version: [ 17, 21 ]
+        jdk_version: [ 21, 24 ]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
