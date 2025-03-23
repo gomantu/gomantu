@@ -1,39 +1,83 @@
-// See https://docs.quarkiverse.io/quarkus-web-bundler/dev/advanced-guides.html#web-dependencies
-// for more information about how to import web-dependencies:
+(function () {
+  /*=====================================
+  Sticky
+  ======================================= */
+  window.onscroll = function () {
+      const header_navbar = document.querySelector(".navbar-area");
+      const sticky = header_navbar.offsetTop;
+      const logo = document.querySelector(".navbar-brand img");
 
-// Example:
-// in your pom.xml:
-// <dependency>
-// 	<groupId>org.mvnpm</groupId>
-// 	<artifactId>jquery</artifactId>
-// 	<version>3.7.1</version>
-// 	<scope>provided</scope>
-// </dependency>
-//
-// in this file:
-// import $ from 'jquery'
+      if (window.scrollY > sticky) {
+          header_navbar.classList.add("sticky");
+          logo.src = "/static/logos/horizontal-ondkbkgd.png";
+      } else {
+          header_navbar.classList.remove("sticky");
+          logo.src = "/static/logos/horizontal-ondkbkgd.png";
+      }
 
-// This app will be bundled by the Web-Bundler (including the imported libraries) and available using the {#bundle /} tag
-// for more information about how to use the {#bundle /} tag, see https://docs.quarkiverse.io/quarkus-web-bundler/dev/advanced-guides.html#bundle-tag
-// Sets the number of stars we wish to display
+      // show or hide the back-top-top button
+      const backToTo = document.querySelector(".scroll-top");
+      if (
+          document.body.scrollTop > 50 ||
+          document.documentElement.scrollTop > 50
+      ) {
+          backToTo.style.display = "flex";
+      } else {
+          backToTo.style.display = "none";
+      }
+  };
 
-const numStars = 1000;
+  // for menu scroll
+  const pageLink = document.querySelectorAll(".page-scroll");
 
-// For every star we want to display
-for (let i = 0; i < numStars; i++) {
-    const star = document.createElement("div");
-    star.className = "star";
-    const xy = getRandomPosition();
-    star.style.left = xy[0] + 'px';
-    star.style.bottom = xy[1] + 'px';
-    document.body.append(star);
-}
+  pageLink.forEach((elem) => {
+      elem.addEventListener("click", (e) => {
+      e.preventDefault();
+      document.querySelector(elem.getAttribute("href")).scrollIntoView({
+          behavior: "smooth",
+          offsetTop: 1 - 60,
+      });
+      });
+  });
 
-// Gets random x, y values based on the size of the container
-function getRandomPosition() {
-    const width = window.innerWidth;
-    const height = window.innerHeight;
-    const randomX = Math.floor(Math.random()*width);
-    const randomY = Math.floor(Math.random()*height);
-    return [randomX,randomY];
-}
+  // section menu active
+  function onScroll(event) {
+      const sections = document.querySelectorAll(".page-scroll");
+      const scrollPos =
+      window.scrollY ||
+      document.documentElement.scrollTop ||
+      document.body.scrollTop;
+
+      for (let i = 0; i < sections.length; i++) {
+      const currLink = sections[i];
+      const val = currLink.getAttribute("href");
+      const refElement = document.querySelector(val);
+      const scrollTopMinus = scrollPos + 73;
+      if (
+          refElement.offsetTop <= scrollTopMinus &&
+          refElement.offsetTop + refElement.offsetHeight > scrollTopMinus
+      ) {
+          document.querySelector(".page-scroll").classList.remove("active");
+          currLink.classList.add("active");
+      } else {
+          currLink.classList.remove("active");
+      }
+      }
+  }
+
+  window.document.addEventListener("scroll", onScroll);
+
+  //===== close navbar-collapse when a  clicked
+  let navbarToggler = document.querySelector(".navbar-toggler");
+  const navbarCollapse = document.querySelector(".navbar-collapse");
+
+  document.querySelectorAll(".page-scroll").forEach((e) =>
+      e.addEventListener("click", () => {
+      navbarToggler.classList.remove("active");
+      navbarCollapse.classList.remove("show");
+      })
+  );
+  navbarToggler.addEventListener("click", function () {
+      navbarToggler.classList.toggle("active");
+  });
+})();

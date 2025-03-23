@@ -1,0 +1,6 @@
+---
+description: Code Style rules
+globs: *.*
+alwaysApply: false
+---
+- Format code with 2 spaces for tabs

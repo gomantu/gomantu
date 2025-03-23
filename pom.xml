@@ -15,6 +15,8 @@
         <quarkus.platform.version>3.19.2</quarkus.platform.version>
         <skipITs>true</skipITs>
         <surefire-plugin.version>3.5.2</surefire-plugin.version>
+        <quarkus-web-bundler.version>1.8.1</quarkus-web-bundler.version>
+        <neo4j.version>5.2.0</neo4j.version>
     </properties>
 
     <dependencyManagement>
@@ -37,12 +39,12 @@
         <dependency>
             <groupId>io.quarkiverse.web-bundler</groupId>
             <artifactId>quarkus-web-bundler</artifactId>
-            <version>1.8.1</version>
+            <version>${quarkus-web-bundler.version}</version>
         </dependency>
         <dependency>
             <groupId>io.quarkiverse.neo4j</groupId>
             <artifactId>quarkus-neo4j</artifactId>
-            <version>5.2.0</version>
+            <version>${neo4j.version}</version>
         </dependency>
         <dependency>
             <groupId>io.quarkus</groupId>
@@ -51,6 +53,13 @@
         <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-rest</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>io.quarkiverse.playwright</groupId>
+            <artifactId>quarkus-playwright</artifactId>
+            <version>2.1.1</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>io.quarkus</groupId>
@@ -61,6 +70,14 @@
             <groupId>io.rest-assured</groupId>
             <artifactId>rest-assured</artifactId>
             <scope>test</scope>
+        </dependency>
+
+        <!-- UI dependencies-->
+        <dependency>
+          <groupId>org.mvnpm</groupId>
+          <artifactId>htmx.org</artifactId>
+          <version>2.0.4</version>
+          <scope>provided</scope>
         </dependency>
     </dependencies>
 
